@@ -3,32 +3,47 @@ import random
 
 
 # https://en.wikipedia.org/wiki/Elo_rating_system
-def elo_point_delta(winner_rating, loser_rating):
+def new_elo_ratings(winner_rating, loser_rating):
     return (loser_rating + 400, winner_rating - 400)
 
 
-def init_ratings(items):
+def init_elo_ratings(items):
     ratings = {}
     for item in items:
         ratings[item] = 1200
     return ratings    
 
 
-def prompt_faceoff(item1, item2):
-    print('A:', item1, 'B:', item2)
-    choice = input()
+def adjust_elo_ratings(ratings, winner, loser):
+    new_ratings = new_elo_ratings(ratings[winner], ratings[loser])
+    ratings[winner] = new_ratings[0]
+    ratings[loser] = new_ratings[1]
 
 
-def prompt_round(ratings):
+def prompt_faceoff(itemA, itemB):
+    print('a:', itemA, 'b:', itemB)
+    choice = False
+    while choice != 'a' and choice != 'b':
+        choice = input()
+    return choice
+
+
+def prompt_elo_round(ratings):
     items = list(ratings)
     random.shuffle(items)
     for i in range(0, len(items)-1, 2):
-        prompt_faceoff(items[i], items[i+1])
+        itemA, itemB = items[i], items[i+1]
+        choice = prompt_faceoff(itemA, itemB)
+        if choice == 'a':
+            adjust_elo_ratings(ratings, itemA, itemB)
+        elif choice == 'b':
+            adjust_elo_ratings(ratings, itemB, itemA)
 
 
 def prompt_rankings(items):
-    ratings = init_ratings(items)
-    prompt_round(ratings)
+    ratings = init_elo_ratings(items)
+    prompt_elo_round(ratings)
+    return ratings
 
 
 if __name__ == '__main__':
