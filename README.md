@@ -6,7 +6,13 @@ Implemented in [Python 3](https://www.python.org/).
 
 ## Getting Started
 
-This project is not yet in a working state.
+* Populate `players.txt` with new players to be registered
+  * Any already registered players in `ratings.json` are ignored
+* Run `python3 rank_em.py` for a series of cli prompts to record round of matches
+* Event history is persisted to `events.json`
+  * If `ratings.json` is not present on start, this file is used to create a new aggregate
+* New ratings are persisted to `ratings.json`
+  * This will be used as a snapshot for the next invocation
 
 ## Goals
 

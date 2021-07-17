@@ -1,6 +1,12 @@
-import sys
 import random
+import serialize
+import sys
 from ratings import MatchFinishedEvent, PlayerRegisteredEvent, RatingsAggregate
+
+
+players_filename = 'players.txt'
+events_filename = 'events.json'
+ratings_filename = 'ratings.json'
 
 
 class InvalidChoiceError(Exception):
@@ -37,18 +43,42 @@ def prompt_round(players):
 
 
 def register_players_from_file(filename):
-    events = []
     new_players = []
-    with open(filename, 'r', encoding='utf-8') as infile:
-        new_players = infile.readlines()
+    try:
+        with open(filename, 'r', encoding='utf-8') as infile:
+            new_players = infile.readlines()
+    except FileNotFoundError:
+        return []
+
+    events = []
     for player in new_players:
         events.append(PlayerRegisteredEvent(player))
     return events
 
+
 if __name__ == '__main__':
+    events = []
     ratings = RatingsAggregate()
-    ratings.process_events(
-        register_players_from_file(sys.argv[1]))
-    ratings.process_events(
-        prompt_round(ratings.players()))
+
+    # TODO: read ratings from file
+
+    # TODO: read events from file
+    # new_events = read_events_from_file(events_filename)
+    # events.extend(new_events)
+    # ratings.process_events(new_events)
+
+    new_events = register_players_from_file(players_filename)
+    events.extend(new_events)
+    ratings.process_events(new_events)
+
+    new_events = prompt_round(ratings.players())
+    events.extend(new_events)
+    ratings.process_events(new_events)
+
+    events_json = serialize.events_to_json(events)
+    with open(events_filename, 'w', encoding='utf-8') as outfile:
+        outfile.write(events_json)
+
+    # TODO: write ratings to file
+
     print(ratings)
