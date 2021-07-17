@@ -50,10 +50,7 @@ def register_players_from_file(filename):
     except FileNotFoundError:
         return []
 
-    events = []
-    for player in new_players:
-        events.append(PlayerRegisteredEvent(player))
-    return events
+    return list(map(lambda p: PlayerRegisteredEvent(p), new_players))
 
 
 def serialize_to_file(filename, data, serialize_func):
