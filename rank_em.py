@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
     # TODO: read ratings from file
 
-    # TODO: read events from file
+    # TODO: read events from file, only if ratings don't exist already
     # new_events = read_events_from_file(events_filename)
     # events.extend(new_events)
     # ratings.process_events(new_events)
@@ -79,6 +79,8 @@ if __name__ == '__main__':
     with open(events_filename, 'w', encoding='utf-8') as outfile:
         outfile.write(events_json)
 
-    # TODO: write ratings to file
+    ratings_json = serialize.ratings_to_json(ratings)
+    with open(ratings_filename, 'w', encoding='utf-8') as outfile:
+        outfile.write(ratings_json)
 
     print(ratings)
