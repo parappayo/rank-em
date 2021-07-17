@@ -59,6 +59,11 @@ def read_ratings_from_file(filename):
         return serialize.ratings_from_json(infile.read())
 
 
+def read_events_from_file(filename):
+    with open(filename, 'r', encoding='utf-8') as infile:
+        return serialize.events_from_json(infile.read())
+
+
 def serialize_to_file(filename, data, serialize_func):
     json_str = serialize_func(data)
     with open(filename, 'w', encoding='utf-8') as outfile:
@@ -71,10 +76,10 @@ if __name__ == '__main__':
 
     if os.path.isfile(ratings_filename):
         ratings = read_ratings_from_file(ratings_filename)
-    # else:
-    #     new_events = read_events_from_file(events_filename)
-    #     events.extend(new_events)
-    #     ratings.process_events(new_events)
+    else:
+        new_events = read_events_from_file(events_filename)
+        events.extend(new_events)
+        ratings.process_events(new_events)
 
     new_events = register_players_from_file(players_filename)
     events.extend(new_events)

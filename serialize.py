@@ -1,5 +1,5 @@
 import json
-from ratings import MatchFinishedEvent, PlayerRegisteredEvent, RatingsAggregate
+from ratings import InvalidEventTypeError, MatchFinishedEvent, PlayerRegisteredEvent, RatingsAggregate
 
 
 def events_to_json(events):
@@ -7,6 +7,19 @@ def events_to_json(events):
     for event in events:
         serializable.append(vars(event))
     return json.dumps(serializable)
+
+
+def event_from_dict(event_dict):
+    if event_dict['type'] == 'PlayerRegistered':
+        return PlayerRegisteredEvent(event_dict['player'])
+    elif event_dict['type'] == 'MatchFinished':
+        return MatchFinishedEvent(event_dict['winner'], event_dict['loser'])
+    raise InvalidEventTypeError(event_dict.type)
+
+
+def events_from_json(json_str):
+    events = json.loads(json_str)
+    return list(map(lambda e: event_from_dict(e), events))
 
 
 def ratings_to_dict(ratings):

@@ -2,6 +2,12 @@
 # https://en.wikipedia.org/wiki/Elo_rating_system
 
 
+class InvalidEventTypeError(Exception):
+    """Raised when event type is unrecognized."""
+    def __init__(type):
+        self.message = 'type is ' + type
+
+
 class PlayerRegisteredEvent:
     def __init__(self, player):
         self.type = 'PlayerRegistered'
