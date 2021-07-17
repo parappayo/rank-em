@@ -56,6 +56,12 @@ def register_players_from_file(filename):
     return events
 
 
+def serialize_to_file(filename, data, serialize_func):
+    json_str = serialize_func(data)
+    with open(filename, 'w', encoding='utf-8') as outfile:
+        outfile.write(json_str)
+
+
 if __name__ == '__main__':
     events = []
     ratings = RatingsAggregate()
@@ -75,12 +81,7 @@ if __name__ == '__main__':
     events.extend(new_events)
     ratings.process_events(new_events)
 
-    events_json = serialize.events_to_json(events)
-    with open(events_filename, 'w', encoding='utf-8') as outfile:
-        outfile.write(events_json)
-
-    ratings_json = serialize.ratings_to_json(ratings)
-    with open(ratings_filename, 'w', encoding='utf-8') as outfile:
-        outfile.write(ratings_json)
+    serialize_to_file(events_filename, events, serialize.events_to_json)
+    serialize_to_file(ratings_filename, ratings, serialize.ratings_to_json)
 
     print(ratings)
