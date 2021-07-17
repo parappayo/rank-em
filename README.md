@@ -30,6 +30,7 @@ Implemented in [Python 3](https://www.python.org/).
 
 ## Future Considerations
 
+* [Pickle](https://docs.python.org/3/library/pickle.html) for better JSON serialization options
 * Configurable persistence as [Postgres](https://www.postgresql.org/), [Mongo](https://www.mongodb.com/), [Redis](https://redis.io/), or [Sqlite](https://www.sqlite.org/)
 * [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer) via [Flask](https://flask.palletsprojects.com/)
 * [GraphQL](https://graphql.org/)

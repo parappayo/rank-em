@@ -1,3 +1,4 @@
+import os
 import random
 import serialize
 import sys
@@ -53,6 +54,11 @@ def register_players_from_file(filename):
     return list(map(lambda p: PlayerRegisteredEvent(p), new_players))
 
 
+def read_ratings_from_file(filename):
+    with open(filename, 'r', encoding='utf-8') as infile:
+        return serialize.ratings_from_json(infile.read())
+
+
 def serialize_to_file(filename, data, serialize_func):
     json_str = serialize_func(data)
     with open(filename, 'w', encoding='utf-8') as outfile:
@@ -63,12 +69,12 @@ if __name__ == '__main__':
     events = []
     ratings = RatingsAggregate()
 
-    # TODO: read ratings from file
-
-    # TODO: read events from file, only if ratings don't exist already
-    # new_events = read_events_from_file(events_filename)
-    # events.extend(new_events)
-    # ratings.process_events(new_events)
+    if os.path.isfile(ratings_filename):
+        ratings = read_ratings_from_file(ratings_filename)
+    # else:
+    #     new_events = read_events_from_file(events_filename)
+    #     events.extend(new_events)
+    #     ratings.process_events(new_events)
 
     new_events = register_players_from_file(players_filename)
     events.extend(new_events)
