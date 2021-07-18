@@ -24,8 +24,10 @@ Implemented in [Python 3](https://www.python.org/).
 
 ### TODO
 
+* Print human-readable ranking at the end
 * Fix rating adjustment formula
-  * Points transfered is proportional to player delta
+  * Points transfered is proportional to player delta when the winner is the lower rated player
+  * Points transfered is inversely proportional to player delta when the winner is the higher rated player
   * Points transfered is inversely proportional to the distance from staring value
 * Ladder matches instead of shuffle
 * Event envelope

@@ -60,8 +60,11 @@ def read_ratings_from_file(filename):
 
 
 def read_events_from_file(filename):
-    with open(filename, 'r', encoding='utf-8') as infile:
-        return serialize.events_from_json(infile.read())
+    try:
+        with open(filename, 'r', encoding='utf-8') as infile:
+            return serialize.events_from_json(infile.read())
+    except FileNotFoundError:
+        return []
 
 
 def serialize_to_file(filename, data, serialize_func):
