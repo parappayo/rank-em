@@ -22,15 +22,32 @@ Implemented in [Python 3](https://www.python.org/).
 * [Event Sourcing](https://martinfowler.com/eaaDev/EventSourcing.html) architecture
 * [Unit Tests](https://docs.python.org/3/library/unittest.html)
 
+### TODO
+
+* Fix rating adjustment formula
+  * Points transfered is proportional to player delta
+  * Points transfered is inversely proportional to the distance from staring value
+* Ladder matches instead of shuffle
+* Event envelope
+  * Type, version, event time, payload
+  * SQL table schema sketched out
+* Fix: do not generate redundant register player events
+* Instructions to remove a game result from history and regenerate ratings
+
 ## Terminology
 
+* Aggregate - state derived from reducing a series events
+* Event - record of something having happend
+* Ladder - when players are matched based on their ranking neighbours
 * Match - a contest between two players resulting in one player being the winner and the other being the loser
 * Player - a registered contestant identified by a string key, could be any entity
-* Ratings - aggregate of player ratings obtained by applying match results
+* Ranking - a player's standing in the list of registered players
+* Rating - aggregate measure of player performance obtained by applying match results
+* Reducer - function that updates state based on an event
 
 ## Future Considerations
 
-* [Pickle](https://docs.python.org/3/library/pickle.html) for better JSON serialization options
+* [orjson](https://github.com/ijl/orjson) or [Pickle](https://docs.python.org/3/library/pickle.html) for better [JSON](https://www.json.org/) serialization
 * Configurable persistence as [Postgres](https://www.postgresql.org/), [Mongo](https://www.mongodb.com/), [Redis](https://redis.io/), or [Sqlite](https://www.sqlite.org/)
 * [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer) via [Flask](https://flask.palletsprojects.com/)
 * [GraphQL](https://graphql.org/)
