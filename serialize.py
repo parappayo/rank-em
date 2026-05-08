@@ -28,7 +28,8 @@ def ratings_to_dict(ratings):
         'initial_rating': ratings.initial_rating,
         'min_swing': ratings.min_swing,
         'max_swing': ratings.max_swing,
-        'delta_factor': ratings.delta_factor,
+        'k_factor': ratings.k_factor,
+        'elo_scale': ratings.elo_scale,
     }
 
 
@@ -42,7 +43,8 @@ def ratings_from_dict(ratings_dict):
     result.initial_rating = ratings_dict['initial_rating']
     result.min_swing = ratings_dict['min_swing']
     result.max_swing = ratings_dict['max_swing']
-    result.delta_factor = ratings_dict['delta_factor']
+    result.k_factor = ratings_dict.get('k_factor', 0.5)
+    result.elo_scale = ratings_dict.get('elo_scale', 400)
     return result
 
 
